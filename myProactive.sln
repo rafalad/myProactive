@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "myProactive", "myProactive.csproj", "{FCE98856-18A5-4F08-950D-6B256027ABA5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FCE98856-18A5-4F08-950D-6B256027ABA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCE98856-18A5-4F08-950D-6B256027ABA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCE98856-18A5-4F08-950D-6B256027ABA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCE98856-18A5-4F08-950D-6B256027ABA5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A0841A4C-034C-4293-BDD7-36CC0AC8E4D1}
+	EndGlobalSection
+EndGlobal
