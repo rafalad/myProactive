@@ -49,8 +49,6 @@
 			this.btnCancel = new System.Windows.Forms.Button();
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
-			this.TextBoxSelectedAcc = new System.Windows.Forms.RichTextBox();
-			this.label1 = new System.Windows.Forms.Label();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
 			this.label2 = new System.Windows.Forms.Label();
 			this.richTextBox_savepath = new System.Windows.Forms.RichTextBox();
@@ -154,8 +152,6 @@
 			this.groupBox1.Controls.Add(this.btnCancel);
 			this.groupBox1.Controls.Add(this.textBox1);
 			this.groupBox1.Controls.Add(this.label4);
-			this.groupBox1.Controls.Add(this.TextBoxSelectedAcc);
-			this.groupBox1.Controls.Add(this.label1);
 			this.groupBox1.Controls.Add(this.progressBar);
 			this.groupBox1.Controls.Add(this.label2);
 			this.groupBox1.Controls.Add(this.richTextBox_savepath);
@@ -243,7 +239,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.label5.Location = new System.Drawing.Point(77, 340);
+			this.label5.Location = new System.Drawing.Point(65, 317);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(160, 16);
 			this.label5.TabIndex = 40;
@@ -277,43 +273,18 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.label4.Location = new System.Drawing.Point(30, 340);
+			this.label4.Location = new System.Drawing.Point(6, 317);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(53, 19);
 			this.label4.TabIndex = 38;
 			this.label4.Text = "Progress:";
 			// 
-			// TextBoxSelectedAcc
-			// 
-			this.TextBoxSelectedAcc.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.TextBoxSelectedAcc.Location = new System.Drawing.Point(196, 305);
-			this.TextBoxSelectedAcc.Name = "TextBoxSelectedAcc";
-			this.TextBoxSelectedAcc.ReadOnly = true;
-			this.TextBoxSelectedAcc.Size = new System.Drawing.Size(100, 22);
-			this.TextBoxSelectedAcc.TabIndex = 37;
-			this.TextBoxSelectedAcc.Text = "Pending";
-			this.TextBoxSelectedAcc.TextChanged += new System.EventHandler(this.TextBoxSelectedAcc_TextChanged);
-			// 
-			// label1
-			// 
-			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.label1.Location = new System.Drawing.Point(30, 308);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(134, 35);
-			this.label1.TabIndex = 36;
-			this.label1.Text = "Selected Outlook account:";
-			//this.label1.Click += new System.EventHandler(this.label1_Click);
-			// 
 			// progressBar
 			// 
-			this.progressBar.Location = new System.Drawing.Point(33, 362);
+			this.progressBar.Location = new System.Drawing.Point(9, 339);
 			this.progressBar.Name = "progressBar";
-			this.progressBar.Size = new System.Drawing.Size(263, 30);
+			this.progressBar.Size = new System.Drawing.Size(287, 30);
 			this.progressBar.TabIndex = 30;
-			//this.progressBar.Click += new System.EventHandler(this.progressBar_Click);
 			// 
 			// label2
 			// 
@@ -390,7 +361,6 @@
 			this.listBox1.Name = "listBox1";
 			this.listBox1.Size = new System.Drawing.Size(854, 369);
 			this.listBox1.TabIndex = 36;
-			//this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
 			// 
 			// progressBar1
 			// 
@@ -490,8 +460,6 @@
 		private System.Windows.Forms.BindingSource outlookEmailsBindingSource;
 		public System.Windows.Forms.ListBox listBox1;
 		public System.Windows.Forms.ProgressBar progressBar;
-		private System.Windows.Forms.RichTextBox TextBoxSelectedAcc;
-		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.Button btnCancel;

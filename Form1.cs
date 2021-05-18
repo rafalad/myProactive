@@ -229,23 +229,6 @@ namespace myProactive
             }
         }
 
-        /*
-		private void toExcel_CheckedChanged(object sender, EventArgs e)
-		{
-			//jezeli checkbox jest zaznaczony, to przypisz sciezke do stringa, 
-			//ktory zostanie wyslany do klasy outlook po nacisnieniu przycisku "go"
-			if (toExcel.Checked) 
-			{
-				//excelPath = @"C:\EDI\LW_Proactive_testfile.xlsx";
-				//richTextBox_savepath.Text = excelPath;
-			}
-			else
-			{
-				excelPath = "blank";
-				richTextBox_savepath.Text = "no write to file ";
-			}
-		}
-        */
         public void CustomizeVerticalScroll()
         {
             // Make sure no items are displayed partially.
@@ -263,18 +246,6 @@ namespace myProactive
             listBox1.HorizontalExtent = hzSize;
         }
 
-        /*
-        public void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-		{
-
-        }
-		// Static method, call the non-static version if the form exist.
-		public static void EnableStaticTextBox(bool enable)
-		{
-			if (form != null)
-				form.EnableTextBox(enable);
-		}
-        */
 		private void EnableTextBox(bool enable)
 		{
 			// If this returns true, it means it was called from an external thread.
@@ -294,17 +265,7 @@ namespace myProactive
                 obj = null;
             }
         }
-        /*
-		private void label1_Click(object sender, EventArgs e)
-		{
 
-		}
-
-		private void progressBar_Click(object sender, EventArgs e)
-		{
-
-		}
-        */
 		private void textBox1_TextChanged(object sender, EventArgs e)
 		{
             if (Regex.IsMatch(textBox1.Text, "[^0-9]"))
@@ -332,9 +293,6 @@ namespace myProactive
 
             //wykorzystam to do nazwy kategorii w outlooku
             LoginDSV login = new LoginDSV();
-
-            //OutlookInfo account = new OutlookInfo();
-            //System.Threading.Thread.Sleep(100);
 
             int i = 0;
 
@@ -381,20 +339,8 @@ namespace myProactive
                         // licznik maili, zwiększam o 1 za każdym razem gdy obliczam kolejną pozycję mailową
                         i = i + 1;
 
-                        //if (item.Categories == null) // no current categories assigned
-                        //    item.Categories = customCat;
-                        //item.Categories.Contains("handled by myProactive"); // insert as first assigned category
-                        //item.Categories = string.Format("{0}, {1}", "handled by myProactive", item.Categories);
-
-
-                        // Porównuję daty - wybraną i tą z outlooka.
-                        //while (DateTime.Parse(calendarPicker, CultureInfo.InvariantCulture) <= DateTime.Parse(item.CreationTime.ToString(), CultureInfo.InvariantCulture))
-                        //
-                        //{
-                        //}
                         //Start date
                         string startDate = item.CreationTime.ToString();
-                        //string endDate //= item.CreationTime.ToString();
 
                         if ((i <= number)) //wczytaj tyle maili, ile zostalo wybranych w klasie Form1.cs
                         {
@@ -421,11 +367,10 @@ namespace myProactive
                                        }
                                    }
                                //Zapisuje maila po dodaniu kategorii
-                               item.Save();
-
+                                   item.Save();
 
                                //System.Threading.Thread.Sleep(100);
-                               var stringBuilder = new StringBuilder();
+                                   var stringBuilder = new StringBuilder();
 
                                    string CreationTime = item.CreationTime.ToString();
                                    stringBuilder.AppendLine("Subject: " + item.Subject);
@@ -433,9 +378,8 @@ namespace myProactive
 
                                    string body = item.Body.ToString();
                                    Marshal.ReleaseComObject(item);
-                               //string source_wfid = string.Empty;
 
-                               string sPattern = "LOCK";
+                                   string sPattern = "LOCK";
 
                                    if (Regex.IsMatch(body, sPattern, RegexOptions.IgnoreCase))
                                    {
@@ -445,7 +389,7 @@ namespace myProactive
                                    else
                                    {
                                    //////////// extract WFID
-                                   content = stringBuilder.ToString();
+                                       content = stringBuilder.ToString();
                                        int first = content.IndexOf(" = ") + " : ".Length;
 
                                        int last = content.LastIndexOf(" : ");
@@ -460,9 +404,7 @@ namespace myProactive
                                        if (wfidTry.Success)
                                        {
                                            wfid = wfidTry.Value;
-                                       //int wfid_count = wfid.Value.Count();
-                                       //string source_wfid = wfid.Value.Substring(0, wfid_count);
-                                   }
+                                       }
                                        else
                                        {
                                            wfid = "myProactive_error";
@@ -471,7 +413,7 @@ namespace myProactive
                                    //////////// extract BP
                                    ///
 
-                                   string content_BP = stringBuilder.ToString();
+                                       string content_BP = stringBuilder.ToString();
                                        int first_bp = content_BP.IndexOf(" : ") + ": ".Length;
                                        int last_bp = content_BP.LastIndexOf("Body");
 
@@ -482,10 +424,10 @@ namespace myProactive
                                        string bp = bp_part1.Substring(first_bp1, last_bp1 - first_bp1);
 
                                    //////////// extract SOURCE ID
-                                   string content_sourceID = stringBuilder.ToString();
+                                       string content_sourceID = stringBuilder.ToString();
 
                                        int first2 = content_sourceID.IndexOf("(Name)"); //+ " : ".Length;
-                                   int last2 = content_sourceID.LastIndexOf("(Name)");
+                                       int last2 = content_sourceID.LastIndexOf("(Name)");
                                        string source_id = content_sourceID.Substring(first2 + 7, last2 - 26 - first2);
 
                                        string sourceIDpattern = "()";
@@ -495,7 +437,7 @@ namespace myProactive
                                            source_id = "()";
                                        }
                                        else // jezeli wystpuje w stringu () to utnij spacje
-                                   {
+                                       {
                                            if (Regex.IsMatch(source_id, sourceIDpattern, RegexOptions.IgnoreCase))
                                            {
                                                source_id = source_id.Trim();
@@ -504,10 +446,10 @@ namespace myProactive
 
                                    //////////// extract DESTINATION ID
 
-                                   string content_destID = stringBuilder.ToString();
+                                       string content_destID = stringBuilder.ToString();
 
                                        int first_destID = content_destID.IndexOf("Destination"); //+ " : ".Length;
-                                   int last_destID = content_destID.LastIndexOf("Type");
+                                       int last_destID = content_destID.LastIndexOf("Type");
                                        string source_destID = content_destID.Substring(first_destID + 22, last_destID - 35 - first_destID);
 
                                        string destIDpattern = "()";
@@ -517,7 +459,7 @@ namespace myProactive
                                            source_destID = "()";
                                        }
                                        else //jezeli wystepuje w stringu () to utnij spacje
-                                   {
+                                       {
                                            if (Regex.IsMatch(source_destID, destIDpattern, RegexOptions.IgnoreCase))
                                            {
                                                source_destID = source_destID.Trim();
@@ -526,7 +468,7 @@ namespace myProactive
 
                                    //////////// extract ERROR
 
-                                   string content_error = stringBuilder.ToString();
+                                       string content_error = stringBuilder.ToString();
                                        int first_error = content_error.IndexOf(" : ") + " : ".Length;
                                        int last_error = content_error.LastIndexOf("Body:");
 
@@ -550,16 +492,15 @@ namespace myProactive
 
 
                                        listBox1.Items.Add("Item: " + i + " || " + "Date: " + CreationTime + " || " + "WFID: " + wfid + " || " +
-                                   "BP: " + bp + " || " + "SourceID: " + source_id + " || " + "DestinationID: " + source_destID + " || " + source_error);
+                                       "BP: " + bp + " || " + "SourceID: " + source_id + " || " + "DestinationID: " + source_destID + " || " + source_error);
 
                                    //AktualizujProgres(i, number);
-                                   CustomizeVerticalScroll();
+                                       CustomizeVerticalScroll();
                                        listBox1.TopIndex = listBox1.Items.Count - 1; // przewijam wraz z dodana pozycja
 
                                    // Check if the cancellation is requested
 
-
-                                   if (backgroundWorker1.CancellationPending)
+                                       if (backgroundWorker1.CancellationPending)
                                        {
                                        // Set Cancel property of DoWorkEventArgs object to true
                                        e.Cancel = true;
@@ -569,10 +510,7 @@ namespace myProactive
 
                                            return;
                                        }
-
                                    }
-
-
                                }));
                         }
                     }
@@ -652,15 +590,10 @@ namespace myProactive
         {
             if (e.Cancelled)
             {
-                //backgroundWorker1.CancelAsync();
-                label5.Text = "Processing cancelled";
-
-                
+                label5.Text = "Processing cancelled";   
             }
             else if (e.Error != null)
             {
-                //label5.Text = e.Error.Message;
-                
                 listBox1.Items.Add("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + e.Error.Message);
             }
             else
@@ -679,8 +612,6 @@ namespace myProactive
 
 		private void buttonExtract_Click(object sender, EventArgs e)
 		{
-            //string excelname = "LW_ErrorAnalyze_" + thisDay.ToString("ddMMyyyyhhmmss") + ".xlsx";
-
             ExtractResource click = new ExtractResource();
             //Wydobywam plik
             click.Extract("myProactive", @"C:\EDI", "Resources", "LW_ErrorAnalyze.xlsx");
@@ -691,46 +622,10 @@ namespace myProactive
 
 		}
 
-		private void toolStripStatusLabel1_Click(object sender, EventArgs e)
-		{
-
-		}
-
 		private void cleanEventViewerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
             listBox1.Items.Clear();
             listBox1.Items.Add("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + "App is ready to use.");
-        }
-
-        /*
-		private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-		{
-            //jezeli nie wybrano limitu ilosci maili to ustawiam limit na 1000 sztuk.
-
-            string selected = this.comboBox1.GetItemText(this.comboBox1.SelectedItem); //wybieram zmienna z comboboxa
-            
-            if (selected == "Yes")
-            {
-                textBox1.Enabled = true;
-                
-            }
-            else
-            {
-                textBox1.Enabled = false;
-            }
-        }
-        */
-
-		private void button1_Click(object sender, EventArgs e)
-		{
-            /*
-            string calendarPicker = dateTimePicker.Value.Date.ToString();
-
-            // wybieram pierwsze 10 znaków tworząc datę
-            string chosenDate = calendarPicker.Substring(0, 10);
-
-            MessageBox.Show(chosenDate);
-            */
         }
 
 		private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -765,10 +660,5 @@ namespace myProactive
                 textBox1.Enabled = true;
             }
         }
-
-		private void TextBoxSelectedAcc_TextChanged(object sender, EventArgs e)
-		{
-
-		}
 	}
 }
