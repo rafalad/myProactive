@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Office.Interop.Excel;
 using _Excel = Microsoft.Office.Interop.Excel;
+using System.Windows.Forms;
 
 namespace myProactive
 {
@@ -18,13 +19,21 @@ namespace myProactive
 
 		public Excel(string path, int sheet)
 		{
-			this.path = path;
-			wb = excel.Workbooks.Open(path);
-			ws = wb.Worksheets[sheet];
+			if (path == "blank")
+			{
+
+			}
+			else
+			{
+				this.path = path;
+				wb = excel.Workbooks.Open(path);
+				ws = wb.Worksheets[sheet];
+			}
 		}
 
 		public string ReadCell(int i, int j)
 		{
+			//
 			i++;
 			j++;
 			if (ws.Cells[i, j].Value2 != null)
@@ -35,10 +44,20 @@ namespace myProactive
 
 		public void WriteToCell(int i, int j, string s)
 		{
+			//ws.Cells[1, 1].Column.
+			//ws.Cells.Borders.
+			//ws.Cells.EntireColumn.AutoFit(); // dostosowanie kalumny szerokoc
+			//ws.Columns.AutoFitContents();
+			//ws.Cells.EntireRow.BorderAround2();
+			//ws.Cells[1, 1].EntireRow.Font.Bold = true;
+			//.Style.EntireColumn.AutoFit();
 			i++;
 			j++;
 			ws.Cells[i, j].Value2 = s;
+			//ws.Cells.FormulaHidden = false;
+			
 		}
+
 		public void Save()
 		{
 			wb.Save();
@@ -50,17 +69,11 @@ namespace myProactive
 		public void Close()
 		{
 			wb.Close();
-		}
-
-		public void Quit()
-		{
-			wb.Close();
 			excel.Quit();
 		}
-
 		public void KillSpecificExcelFileProcess(string excelFileName)
 		{
-			var processes = from p in Process.GetProcessesByName("EXCEL.EXE")
+			var processes = from p in Process.GetProcessesByName(excelFileName)
 							select p;
 
 			foreach (var process in processes)
