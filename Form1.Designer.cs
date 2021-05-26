@@ -160,7 +160,7 @@
 			this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.groupBox1.Location = new System.Drawing.Point(12, 36);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(338, 400);
+			this.groupBox1.Size = new System.Drawing.Size(307, 400);
 			this.groupBox1.TabIndex = 17;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Main menu";
@@ -217,7 +217,7 @@
 			this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.label9.Location = new System.Drawing.Point(6, 28);
 			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(220, 17);
+			this.label9.Size = new System.Drawing.Size(189, 17);
 			this.label9.TabIndex = 47;
 			this.label9.Text = "Select your the time range to handle:";
 			// 
@@ -229,7 +229,7 @@
 			this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.label8.Location = new System.Drawing.Point(6, 55);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(187, 18);
+			this.label8.Size = new System.Drawing.Size(188, 18);
 			this.label8.TabIndex = 43;
 			this.label8.Text = "Would you like to set the item limit?";
 			// 
@@ -239,9 +239,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.label5.Location = new System.Drawing.Point(65, 317);
+			this.label5.Location = new System.Drawing.Point(62, 292);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(160, 16);
+			this.label5.Size = new System.Drawing.Size(129, 16);
 			this.label5.TabIndex = 40;
 			this.label5.Text = "Awaiting";
 			// 
@@ -249,7 +249,7 @@
 			// 
 			this.btnCancel.Enabled = false;
 			this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.btnCancel.Location = new System.Drawing.Point(159, 216);
+			this.btnCancel.Location = new System.Drawing.Point(148, 136);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(100, 26);
 			this.btnCancel.TabIndex = 39;
@@ -273,15 +273,15 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.label4.Location = new System.Drawing.Point(6, 317);
+			this.label4.Location = new System.Drawing.Point(3, 292);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(53, 19);
+			this.label4.Size = new System.Drawing.Size(69, 19);
 			this.label4.TabIndex = 38;
 			this.label4.Text = "Progress:";
 			// 
 			// progressBar
 			// 
-			this.progressBar.Location = new System.Drawing.Point(9, 339);
+			this.progressBar.Location = new System.Drawing.Point(6, 311);
 			this.progressBar.Name = "progressBar";
 			this.progressBar.Size = new System.Drawing.Size(287, 30);
 			this.progressBar.TabIndex = 30;
@@ -292,16 +292,16 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.label2.Location = new System.Drawing.Point(6, 154);
+			this.label2.Location = new System.Drawing.Point(3, 227);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(85, 16);
+			this.label2.Size = new System.Drawing.Size(116, 16);
 			this.label2.TabIndex = 31;
 			this.label2.Text = "Data save path:";
 			// 
 			// richTextBox_savepath
 			// 
 			this.richTextBox_savepath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.richTextBox_savepath.Location = new System.Drawing.Point(9, 173);
+			this.richTextBox_savepath.Location = new System.Drawing.Point(6, 246);
 			this.richTextBox_savepath.Name = "richTextBox_savepath";
 			this.richTextBox_savepath.ReadOnly = true;
 			this.richTextBox_savepath.Size = new System.Drawing.Size(287, 20);
@@ -311,7 +311,7 @@
 			// button_go
 			// 
 			this.button_go.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.button_go.Location = new System.Drawing.Point(53, 216);
+			this.button_go.Location = new System.Drawing.Point(42, 136);
 			this.button_go.Name = "button_go";
 			this.button_go.Size = new System.Drawing.Size(100, 26);
 			this.button_go.TabIndex = 29;
@@ -329,7 +329,7 @@
 			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.label3.Location = new System.Drawing.Point(6, 82);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(160, 27);
+			this.label3.Size = new System.Drawing.Size(180, 27);
 			this.label3.TabIndex = 10;
 			this.label3.Text = "Enter the total number of items:";
 			// 
@@ -341,9 +341,9 @@
 			this.groupBox2.Controls.Add(this.progressBar1);
 			this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
 			this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.groupBox2.Location = new System.Drawing.Point(356, 36);
+			this.groupBox2.Location = new System.Drawing.Point(325, 36);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(866, 400);
+			this.groupBox2.Size = new System.Drawing.Size(897, 400);
 			this.groupBox2.TabIndex = 28;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Event Viewer";
@@ -359,7 +359,7 @@
 			this.listBox1.ItemHeight = 12;
 			this.listBox1.Location = new System.Drawing.Point(6, 25);
 			this.listBox1.Name = "listBox1";
-			this.listBox1.Size = new System.Drawing.Size(854, 369);
+			this.listBox1.Size = new System.Drawing.Size(885, 369);
 			this.listBox1.TabIndex = 36;
 			// 
 			// progressBar1

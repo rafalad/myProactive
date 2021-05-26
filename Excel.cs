@@ -55,8 +55,17 @@ namespace myProactive
 			j++;
 			ws.Cells[i, j].Value2 = s;
 			//ws.Cells.FormulaHidden = false;
-			
 		}
+
+		public void CopyCell(int i, int j)
+		{
+			_Excel.Range sourceRange = ws.Cells[2, 10];
+			_Excel.Range destinationRange = ws.Cells[i, j];
+
+			sourceRange.Copy(Type.Missing);
+			destinationRange.PasteSpecial(XlPasteType.xlPasteFormulas, XlPasteSpecialOperation.xlPasteSpecialOperationNone, false, false);
+		}
+
 
 		public void Save()
 		{

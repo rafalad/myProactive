@@ -188,11 +188,16 @@ namespace myProactive
         public string ExcelFile()
         {
             LoginDSV login = new LoginDSV();
-            
-            DateTime thisDay = DateTime.Today;
-            string excelname = "LW_ErrorAnalyze_" + login.Login() + "_" +  thisDay.ToString("ddMMyyyyhhmmss") + ".xlsx";
-
             ExtractResource click = new ExtractResource();
+            DateTime thisDay = DateTime.Today;
+
+            DateTimeOffset theTime = new DateTimeOffset(2008, 3, 1, 14, 15, 00,
+                                       DateTimeOffset.Now.Offset);
+            
+            string time = thisDay.ToString("ddMMyyyy") + "_" + theTime.Hour + theTime.Minute + theTime.Second;
+            
+            string excelname = "LW_ErrorAnalyze_" + login.Login() + "_" + time + ".xlsx";
+
             //Wydobywam plik
             click.Extract("myProactive", @"C:\EDI", "Resources", "LW_ErrorAnalyze.xlsx");
 
@@ -210,6 +215,7 @@ namespace myProactive
             richTextBox_savepath.Text = excelPath;
 
             return excelname;
+           
         }
 
         public void button_go_Click(object sender, EventArgs e)
@@ -294,7 +300,11 @@ namespace myProactive
             //wykorzystam to do nazwy kategorii w outlooku
             LoginDSV login = new LoginDSV();
 
+            //licznik maili (wszystkie)
             int i = 0;
+
+            //licznik maili zapisanych (uwzglednionych)
+            int l = 0;
 
             int k1 = 1;
             int k2 = 1;
@@ -305,21 +315,23 @@ namespace myProactive
             int k7 = 1;
             int k8 = 1;
             int k9 = 1;
+            //int k10 = 1;
 
             string content = string.Empty;
             string content2 = string.Empty;
             string inc = "waiting to be created";
             string mailCategory = "[myProactive] handled by " + login.Login();
 
-            excel.WriteToCell(1, 0, "");
-            excel.WriteToCell(1, 1, "DATE");
-            excel.WriteToCell(1, 2, "WFID");
-            excel.WriteToCell(1, 3, "BP");
-            excel.WriteToCell(1, 4, "SourceID");
-            excel.WriteToCell(1, 5, "DestinationID");
-            excel.WriteToCell(1, 6, "Error Description");
-            excel.WriteToCell(1, 7, "Taken action");
-            excel.WriteToCell(1, 8, "INC");
+            excel.WriteToCell(2, 0, "");
+            excel.WriteToCell(2, 1, "DATE");
+            excel.WriteToCell(2, 2, "WFID");
+            excel.WriteToCell(2, 3, "BP");
+            excel.WriteToCell(2, 4, "SourceID");
+            excel.WriteToCell(2, 5, "DestinationID");
+            excel.WriteToCell(2, 6, "Error Description");
+            excel.WriteToCell(2, 7, "Taken action");
+            excel.WriteToCell(2, 8, "INC");
+            //excel.WriteToCell(2, 9, "Create Incident");
 
             excel.ReadCell(0, 0);
 
@@ -332,12 +344,15 @@ namespace myProactive
 
                 Microsoft.Office.Interop.Outlook.Items restrictedItems = mailItems.Restrict(filter);
 
-                for (int j = 1; j <= restrictedItems.Count; j++)
+                for (int j = 0; j <= restrictedItems.Count; j++)
                 {
                     foreach (OutlookApp.MailItem item in mailItems)
                     {
                         // licznik maili, zwiększam o 1 za każdym razem gdy obliczam kolejną pozycję mailową
-                        i = i + 1;
+                        i += 1;
+
+                        // licznik maili uwzblędnionych, zwiększam o 1 za każdym razem gdy pochodzę do kolejnego rekordu
+                        l += 1;
 
                         //Start date
                         string startDate = item.CreationTime.ToString();
@@ -369,7 +384,6 @@ namespace myProactive
                                //Zapisuje maila po dodaniu kategorii
                                    item.Save();
 
-                               //System.Threading.Thread.Sleep(100);
                                    var stringBuilder = new StringBuilder();
 
                                    string CreationTime = item.CreationTime.ToString();
@@ -383,12 +397,14 @@ namespace myProactive
 
                                    if (Regex.IsMatch(body, sPattern, RegexOptions.IgnoreCase))
                                    {
-                                   //return "LOCK";
-                                   listBox1.Items.Add("Item: " + i + " || " + "Skipping, found: Error description 'LOCK: Lock exists'");
+                                       listBox1.Items.Add("Item: " + i + " || " + "Skipping, found: Error description 'LOCK: Lock exists'");
+
+                                       //odejmuje z licznika pozycje z LOCK w opisie bledu, w dalszej czesci nie zapisuje i przechodze dalej.
+                                       l -= 1;
                                    }
                                    else
                                    {
-                                   //////////// extract WFID
+                                       //////////// extract WFID
                                        content = stringBuilder.ToString();
                                        int first = content.IndexOf(" = ") + " : ".Length;
 
@@ -410,8 +426,8 @@ namespace myProactive
                                            wfid = "myProactive_error";
                                        }
 
-                                   //////////// extract BP
-                                   ///
+                                       //////////// extract BP
+                                       ///
 
                                        string content_BP = stringBuilder.ToString();
                                        int first_bp = content_BP.IndexOf(" : ") + ": ".Length;
@@ -423,7 +439,7 @@ namespace myProactive
 
                                        string bp = bp_part1.Substring(first_bp1, last_bp1 - first_bp1);
 
-                                   //////////// extract SOURCE ID
+                                       //////////// extract SOURCE ID
                                        string content_sourceID = stringBuilder.ToString();
 
                                        int first2 = content_sourceID.IndexOf("(Name)"); //+ " : ".Length;
@@ -444,7 +460,7 @@ namespace myProactive
                                            }
                                        }
 
-                                   //////////// extract DESTINATION ID
+                                       //////////// extract DESTINATION ID
 
                                        string content_destID = stringBuilder.ToString();
 
@@ -466,7 +482,7 @@ namespace myProactive
                                            }
                                        }
 
-                                   //////////// extract ERROR
+                                       //////////// extract ERROR
 
                                        string content_error = stringBuilder.ToString();
                                        int first_error = content_error.IndexOf(" : ") + " : ".Length;
@@ -480,7 +496,7 @@ namespace myProactive
 
                                        excel.ReadCell(1, 1);
 
-                                       excel.WriteToCell(k1++, 0, i.ToString());
+                                       excel.WriteToCell(k1++, 0, l.ToString());
                                        excel.WriteToCell(k2++, 1, CreationTime);
                                        excel.WriteToCell(k3++, 2, wfid);
                                        excel.WriteToCell(k4++, 3, bp);
@@ -489,24 +505,25 @@ namespace myProactive
                                        excel.WriteToCell(k7++, 6, source_error);
                                        excel.WriteToCell(k8++, 7, "no");
                                        excel.WriteToCell(k9++, 8, inc);
+                                       //excel.CopyCell(k10++, 9);
 
 
                                        listBox1.Items.Add("Item: " + i + " || " + "Date: " + CreationTime + " || " + "WFID: " + wfid + " || " +
                                        "BP: " + bp + " || " + "SourceID: " + source_id + " || " + "DestinationID: " + source_destID + " || " + source_error);
 
-                                   //AktualizujProgres(i, number);
+                                       //AktualizujProgres(i, number);
                                        CustomizeVerticalScroll();
                                        listBox1.TopIndex = listBox1.Items.Count - 1; // przewijam wraz z dodana pozycja
 
-                                   // Check if the cancellation is requested
+                                       // Check if the cancellation is requested
 
                                        if (backgroundWorker1.CancellationPending)
                                        {
-                                       // Set Cancel property of DoWorkEventArgs object to true
-                                       e.Cancel = true;
+                                           // Set Cancel property of DoWorkEventArgs object to true
+                                           e.Cancel = true;
 
-                                       // Reset progress percentage to ZERO and return
-                                       backgroundWorker1.ReportProgress(0);
+                                           // Reset progress percentage to ZERO and return
+                                           backgroundWorker1.ReportProgress(0);
 
                                            return;
                                        }
@@ -520,11 +537,9 @@ namespace myProactive
             catch (System.Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                //Zapobiega propagacji ThreadAbortException
-                Thread.ResetAbort();
-
                 excel.Close();
+                //Zapobiega propagacji ThreadAbortException
+                //Thread.ResetAbort();
             }
             finally
             {
