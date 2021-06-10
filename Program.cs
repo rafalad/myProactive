@@ -16,7 +16,7 @@ namespace myProactive
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new myProactive());
+			Application.Run(new MyProactive());
 		}
 	}
 }

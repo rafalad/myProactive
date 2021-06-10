@@ -1,6 +1,6 @@
 ﻿namespace myProactive
 {
-	partial class myProactive
+	partial class MyProactive
 	{
 		/// <summary>
 		/// Wymagana zmienna projektanta.
@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(myProactive));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MyProactive));
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,6 +40,9 @@
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.checkBoxTagNo = new System.Windows.Forms.CheckBox();
+			this.checkBoxTagYes = new System.Windows.Forms.CheckBox();
+			this.label1 = new System.Windows.Forms.Label();
 			this.checkBoxNo = new System.Windows.Forms.CheckBox();
 			this.checkBoxYes = new System.Windows.Forms.CheckBox();
 			this.comboBoxTimeRange = new System.Windows.Forms.ComboBox();
@@ -94,7 +97,7 @@
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
 			this.exitToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
 			this.exitToolStripMenuItem.Text = "Exit";
-			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
 			// 
 			// editToolStripMenuItem
 			// 
@@ -116,14 +119,14 @@
 			this.minimizeToolStripMenuItem.Name = "minimizeToolStripMenuItem";
 			this.minimizeToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
 			this.minimizeToolStripMenuItem.Text = "Minimize";
-			this.minimizeToolStripMenuItem.Click += new System.EventHandler(this.minimizeToolStripMenuItem_Click);
+			this.minimizeToolStripMenuItem.Click += new System.EventHandler(this.MinimizeToolStripMenuItem_Click);
 			// 
 			// cleanEventViewerToolStripMenuItem
 			// 
 			this.cleanEventViewerToolStripMenuItem.Name = "cleanEventViewerToolStripMenuItem";
 			this.cleanEventViewerToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
 			this.cleanEventViewerToolStripMenuItem.Text = "Clean Event Viewer";
-			this.cleanEventViewerToolStripMenuItem.Click += new System.EventHandler(this.cleanEventViewerToolStripMenuItem_Click);
+			this.cleanEventViewerToolStripMenuItem.Click += new System.EventHandler(this.CleanEventViewerToolStripMenuItem_Click);
 			// 
 			// aboutToolStripMenuItem
 			// 
@@ -138,11 +141,14 @@
 			this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
 			this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
 			this.aboutToolStripMenuItem1.Text = "About";
-			this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutToolStripMenuItem1_Click);
+			this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.AboutToolStripMenuItem1_Click);
 			// 
 			// groupBox1
 			// 
 			this.groupBox1.BackColor = System.Drawing.SystemColors.ControlLight;
+			this.groupBox1.Controls.Add(this.checkBoxTagNo);
+			this.groupBox1.Controls.Add(this.checkBoxTagYes);
+			this.groupBox1.Controls.Add(this.label1);
 			this.groupBox1.Controls.Add(this.checkBoxNo);
 			this.groupBox1.Controls.Add(this.checkBoxYes);
 			this.groupBox1.Controls.Add(this.comboBoxTimeRange);
@@ -165,31 +171,69 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Main menu";
 			// 
+			// checkBoxTagNo
+			// 
+			this.checkBoxTagNo.AutoSize = true;
+			this.checkBoxTagNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.checkBoxTagNo.Location = new System.Drawing.Point(253, 52);
+			this.checkBoxTagNo.Name = "checkBoxTagNo";
+			this.checkBoxTagNo.Size = new System.Drawing.Size(40, 17);
+			this.checkBoxTagNo.TabIndex = 53;
+			this.checkBoxTagNo.Text = "No";
+			this.checkBoxTagNo.UseVisualStyleBackColor = true;
+			this.checkBoxTagNo.CheckedChanged += new System.EventHandler(this.CheckBoxTagNo_CheckedChanged);
+			// 
+			// checkBoxTagYes
+			// 
+			this.checkBoxTagYes.AutoSize = true;
+			this.checkBoxTagYes.Checked = true;
+			this.checkBoxTagYes.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkBoxTagYes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.checkBoxTagYes.Location = new System.Drawing.Point(203, 52);
+			this.checkBoxTagYes.Name = "checkBoxTagYes";
+			this.checkBoxTagYes.Size = new System.Drawing.Size(44, 17);
+			this.checkBoxTagYes.TabIndex = 52;
+			this.checkBoxTagYes.Text = "Yes";
+			this.checkBoxTagYes.UseVisualStyleBackColor = true;
+			this.checkBoxTagYes.CheckedChanged += new System.EventHandler(this.CheckBoxTagYes_CheckedChanged);
+			// 
+			// label1
+			// 
+			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.label1.Location = new System.Drawing.Point(6, 51);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(188, 18);
+			this.label1.TabIndex = 51;
+			this.label1.Text = "Tag email with category? ";
+			// 
 			// checkBoxNo
 			// 
 			this.checkBoxNo.AutoSize = true;
 			this.checkBoxNo.Checked = true;
 			this.checkBoxNo.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.checkBoxNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.checkBoxNo.Location = new System.Drawing.Point(254, 54);
+			this.checkBoxNo.Location = new System.Drawing.Point(253, 75);
 			this.checkBoxNo.Name = "checkBoxNo";
 			this.checkBoxNo.Size = new System.Drawing.Size(40, 17);
 			this.checkBoxNo.TabIndex = 50;
 			this.checkBoxNo.Text = "No";
 			this.checkBoxNo.UseVisualStyleBackColor = true;
-			this.checkBoxNo.CheckedChanged += new System.EventHandler(this.checkBoxNo_CheckedChanged);
+			this.checkBoxNo.CheckedChanged += new System.EventHandler(this.CheckBoxNo_CheckedChanged);
 			// 
 			// checkBoxYes
 			// 
 			this.checkBoxYes.AutoSize = true;
 			this.checkBoxYes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.checkBoxYes.Location = new System.Drawing.Point(204, 54);
+			this.checkBoxYes.Location = new System.Drawing.Point(203, 75);
 			this.checkBoxYes.Name = "checkBoxYes";
 			this.checkBoxYes.Size = new System.Drawing.Size(44, 17);
 			this.checkBoxYes.TabIndex = 49;
 			this.checkBoxYes.Text = "Yes";
 			this.checkBoxYes.UseVisualStyleBackColor = true;
-			this.checkBoxYes.CheckedChanged += new System.EventHandler(this.checkBoxYes_CheckedChanged);
+			this.checkBoxYes.CheckedChanged += new System.EventHandler(this.CheckBoxYes_CheckedChanged);
 			// 
 			// comboBoxTimeRange
 			// 
@@ -207,7 +251,7 @@
 			this.comboBoxTimeRange.TabIndex = 48;
 			this.comboBoxTimeRange.TabStop = false;
 			this.comboBoxTimeRange.Text = "Today";
-			this.comboBoxTimeRange.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+			this.comboBoxTimeRange.SelectedIndexChanged += new System.EventHandler(this.ComboBox2_SelectedIndexChanged);
 			// 
 			// label9
 			// 
@@ -227,7 +271,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.label8.Location = new System.Drawing.Point(6, 55);
+			this.label8.Location = new System.Drawing.Point(6, 76);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(188, 18);
 			this.label8.TabIndex = 43;
@@ -249,7 +293,7 @@
 			// 
 			this.btnCancel.Enabled = false;
 			this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.btnCancel.Location = new System.Drawing.Point(148, 136);
+			this.btnCancel.Location = new System.Drawing.Point(147, 156);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(100, 26);
 			this.btnCancel.TabIndex = 39;
@@ -257,15 +301,15 @@
 			this.btnCancel.Text = "Cancel Async";
 			this.btnCancel.UseCompatibleTextRendering = true;
 			this.btnCancel.UseVisualStyleBackColor = true;
-			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+			this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
 			// 
 			// textBox1
 			// 
-			this.textBox1.Location = new System.Drawing.Point(196, 79);
+			this.textBox1.Location = new System.Drawing.Point(196, 98);
 			this.textBox1.Name = "textBox1";
 			this.textBox1.Size = new System.Drawing.Size(100, 20);
 			this.textBox1.TabIndex = 30;
-			this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+			this.textBox1.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
 			// 
 			// label4
 			// 
@@ -311,7 +355,7 @@
 			// button_go
 			// 
 			this.button_go.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.button_go.Location = new System.Drawing.Point(42, 136);
+			this.button_go.Location = new System.Drawing.Point(41, 156);
 			this.button_go.Name = "button_go";
 			this.button_go.Size = new System.Drawing.Size(100, 26);
 			this.button_go.TabIndex = 29;
@@ -319,7 +363,7 @@
 			this.button_go.Text = "Go";
 			this.button_go.UseCompatibleTextRendering = true;
 			this.button_go.UseVisualStyleBackColor = true;
-			this.button_go.Click += new System.EventHandler(this.button_go_Click);
+			this.button_go.Click += new System.EventHandler(this.Button_go_Click);
 			// 
 			// label3
 			// 
@@ -327,9 +371,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.label3.Location = new System.Drawing.Point(6, 82);
+			this.label3.Location = new System.Drawing.Point(6, 101);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(180, 27);
+			this.label3.Size = new System.Drawing.Size(180, 17);
 			this.label3.TabIndex = 10;
 			this.label3.Text = "Enter the total number of items:";
 			// 
@@ -395,13 +439,13 @@
 			this.ver.TabIndex = 32;
 			this.ver.Text = "version";
 			this.ver.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.ver.Click += new System.EventHandler(this.ver_Click);
+			this.ver.Click += new System.EventHandler(this.Ver_Click);
 			// 
 			// latest_ver
 			// 
 			this.latest_ver.BackColor = System.Drawing.SystemColors.MenuBar;
 			this.latest_ver.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.latest_ver.Location = new System.Drawing.Point(92, 443);
+			this.latest_ver.Location = new System.Drawing.Point(74, 443);
 			this.latest_ver.Name = "latest_ver";
 			this.latest_ver.Size = new System.Drawing.Size(413, 18);
 			this.latest_ver.TabIndex = 35;
@@ -473,6 +517,9 @@
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.CheckBox checkBoxNo;
 		private System.Windows.Forms.CheckBox checkBoxYes;
+		private System.Windows.Forms.CheckBox checkBoxTagNo;
+		private System.Windows.Forms.CheckBox checkBoxTagYes;
+		private System.Windows.Forms.Label label1;
 	}
 }
 

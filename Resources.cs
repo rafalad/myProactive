@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace myProactive
@@ -28,7 +25,7 @@ namespace myProactive
             try
             {
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://files.000webhost.com/myproactive/log.txt");
-                request.Credentials = new NetworkCredential("ediapp", "xxx");
+                request.Credentials = new NetworkCredential("ediapp", "w8EtQdvNMJ8vXbt");
                 request.Method = WebRequestMethods.Ftp.AppendFile;
 
                 Stream requestStream = request.GetRequestStream();

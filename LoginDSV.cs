@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace myProactive
 {
@@ -15,7 +10,7 @@ namespace myProactive
 
 			try
 			{
-				int dot = credentials.IndexOf("."); //wyliczam kropke
+				int dot = credentials.IndexOf("."); // Wyliczam "kropkę"
 
 				string name = credentials.Remove(dot);
 				string lastname = credentials.Substring(dot + 1);
@@ -24,7 +19,7 @@ namespace myProactive
 				return login.ToLower();
 			}
 
-			catch //w przypadku bledu konwersji zwroc cala nazwe uzytkownika
+			catch // W przypadku bledu konwersji zwroc cala nazwe uzytkownika
 			{
 				return SystemInformation.UserName;
 			}

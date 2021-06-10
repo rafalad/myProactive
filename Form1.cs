@@ -13,14 +13,9 @@ using System.Diagnostics;
 
 namespace myProactive
 {
-	public partial class myProactive : Form
+	public partial class MyProactive : Form
 	{
 		private delegate void EnableDelegate(bool enable);
-		private static myProactive form = null;
-
-		[DllImport("kernel32.dll", SetLastError = true)]
-		[return: MarshalAs(UnmanagedType.Bool)]
-		static extern bool AllocConsole();
 
 		public string excelPath;
 		public string noexcelPath = "blank";
@@ -34,40 +29,34 @@ namespace myProactive
         //wybor ilosci maili do przetworzenia
         public int number;
 
-        public int counter;
-
         //wątek roboczy
         private Thread workerThread;
 
-        public myProactive()
+        public MyProactive()
 		{
 			InitializeComponent();
 
             LoginDSV login = new LoginDSV();
             Resources resource = new Resources();
 
-            this.groupBox1.Paint += this.groupBox_Paint;
-            this.groupBox2.Paint += this.groupBox_Paint;
+            groupBox1.Paint += GroupBox_Paint;
+            groupBox2.Paint += GroupBox_Paint;
 
             string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
 
-            listBox1.Items.Add("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + "Logged as: " + userName + " " + "(" + login.Login() + ")");
-            listBox1.Items.Add("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + "App is ready to use.");
-
-            DateTime thisDay = DateTime.Today;
-
-			form = this;
+            ListBox("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + "Logged as: " + userName + " " + "(" + login.Login() + ")");
+            ListBox("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + "App is ready to use.");
 
             ver.Text = "v" + Application.ProductVersion;
 
-            Task.Delay(3000).ContinueWith(t => resource.LogToFTP()); //zapisz log na serwerze z opoźnieniem 3s
+            Task.Delay(3000).ContinueWith(t => resource.LogToFTP()); //zapisz log na serwerze z opoźnieniem
 
             latest_ver.Text = resource.CheckVersion(); //kontrola wersji programu
 
             textBox1.Enabled = false;
-
         }
-        private void groupBox_Paint(object sender, PaintEventArgs e)
+
+        private void GroupBox_Paint(object sender, PaintEventArgs e)
         {
             GroupBox box = sender as GroupBox;
             DrawGroupBox(box, e.Graphics, Color.MidnightBlue, Color.DarkGray);
@@ -86,10 +75,8 @@ namespace myProactive
                                                box.ClientRectangle.Width - 1,
                                                box.ClientRectangle.Height - (int)(strSize.Height / 2) - 1);
 
-                // Clear text and border
                 g.Clear(this.BackColor);
 
-                // Draw text
                 g.DrawString(box.Text, box.Font, textBrush, box.Padding.Left, 0);
 
                 // Drawing Border
@@ -106,17 +93,17 @@ namespace myProactive
             }
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Application.Exit();
 		}
 
-		private void minimizeToolStripMenuItem_Click(object sender, EventArgs e)
+		private void MinimizeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.WindowState = FormWindowState.Minimized;
+			WindowState = FormWindowState.Minimized;
 		}
 
-		private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
+		private void AboutToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
             MessageBox.Show("myProactive " + ver.Text + Environment.NewLine + "" + Environment.NewLine +
                 "Developed by: " + Environment.NewLine + "" + Environment.NewLine +
@@ -124,16 +111,16 @@ namespace myProactive
                 "EDI Support Team®", "myProactive", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        public string SetFilter()
+        private string SetFilter()
         {
-            //filtr uzywany z metodzie ReadMailItems 
+            // Filtr używany w metodzie ReadMailItems 
             string filter_today = "@SQL=" + "%today(" + "\"" + "DAV:getlastmodified" + "\"" + ")%";
             string filter_yesterday = "@SQL=" + "%yesterday(" + "\"" + "DAV:getlastmodified" + "\"" + ")%";
             string filter_thisweek = "@SQL=" + "%thisweek(" + "\"" + "DAV:getlastmodified" + "\"" + ")%";
             string filter_thismonth = "@SQL=" + "%thismonth(" + "\"" + "DAV:getlastmodified" + "\"" + ")%";
             string filter_lastmonth = "@SQL=" + "%lastmonth(" + "\"" + "DAV:getlastmodified" + "\"" + ")%";
 
-            string selected = this.comboBoxTimeRange.GetItemText(this.comboBoxTimeRange.SelectedItem);
+            string selected = comboBoxTimeRange.GetItemText(comboBoxTimeRange.SelectedItem);
 
             if (selected == "Today")
             {
@@ -158,11 +145,11 @@ namespace myProactive
             return filter;
         }
 
-        public int SetQuantity()
+        private int SetQuantity()
         {
             if (textBox1.Enabled == true)
             {
-                if (textBox1.Text == String.Empty)
+                if (textBox1.Text == string.Empty)
                 {
                     MessageBox.Show("Please enter the quantity of items.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -185,21 +172,20 @@ namespace myProactive
         }
 
         //Funkcja która wydobywa plik excel i nadaje mu nazwę, po czym wrzuca ją do zmiennej publicznej excelname.
-        public string ExcelFile()
+        private string ExcelFile()
         {
             LoginDSV login = new LoginDSV();
-            ExtractResource click = new ExtractResource();
+            ExtractResource resource = new ExtractResource();
             DateTime thisDay = DateTime.Today;
 
-            DateTimeOffset theTime = new DateTimeOffset(2008, 3, 1, 14, 15, 00,
-                                       DateTimeOffset.Now.Offset);
+            DateTimeOffset theTime = new DateTimeOffset(2008, 3, 1, 14, 15, 00, DateTimeOffset.Now.Offset);
             
             string time = thisDay.ToString("ddMMyyyy") + "_" + theTime.Hour + theTime.Minute + theTime.Second;
             
             string excelname = "LW_ErrorAnalyze_" + login.Login() + "_" + time + ".xlsx";
 
             //Wydobywam plik
-            click.Extract("myProactive", @"C:\EDI", "Resources", "LW_ErrorAnalyze.xlsx");
+            resource.Extract("myProactive", @"C:\EDI", "Resources", "LW_ErrorAnalyze.xlsx");
 
             //Zmieniam nazwę pliku
             if (File.Exists(@"C:\EDI\LW_ErrorAnalyze.xlsx"))
@@ -207,59 +193,59 @@ namespace myProactive
                 File.Copy(@"C:\EDI\LW_ErrorAnalyze.xlsx", @"C:\EDI\" + excelname, true);
                 File.Delete(@"C:\EDI\LW_ErrorAnalyze.xlsx");
             }
-            //File.Move(@"C:\EDI\LW_ErrorAnalyze.xlsx", @"C:\EDI\" + excelname);
 
             //przypisuje nowo utworzony jako plik docelowy
-
             excelPath = @"C:\EDI\" + excelname;
             richTextBox_savepath.Text = excelPath;
 
             return excelname;
-           
         }
 
-        public void button_go_Click(object sender, EventArgs e)
+        private void Button_go_Click(object sender, EventArgs e)
         {
+            // pobierz ilość zadeklarowanych maili
             SetQuantity();
             
             // przypisz do zmiennej publicznej filter wybrany filtr z comboboxa
             SetFilter();
-            //ustaw nazwe pliku
+
+            // ustaw nazwe pliku
             ExcelFile();
-       
-            // Check if the backgroundWorker is already busy running the asynchronous operation
+
+            // Sprawdź czy backgroundWorker jest już zajęty wykonywaniem operacji asynchronicznej 
             if (!backgroundWorker1.IsBusy)
             {
-                // This method will start the execution asynchronously in the background
+                // Ta metoda uruchomi wykonanie asynchronicznie w tle 
                 backgroundWorker1.RunWorkerAsync();
             }
         }
 
         public void CustomizeVerticalScroll()
         {
-            // Make sure no items are displayed partially.
+            // Upewniam się, że żadne elementy nie są wyświetlane częściowo. 
             listBox1.IntegralHeight = true;
 
-            // Display a horizontal scroll bar.
+            // Wyświetl poziomy pasek przewijania. 
             listBox1.HorizontalScrollbar = true;
 
-            // Create a Graphics object to use when determining the size of the largest item in the ListBox.
+            // Utwórz obiekt Graphics do użycia podczas określania rozmiaru największego elementu w ListBox. 
             Graphics g = listBox1.CreateGraphics();
 
-            // Determine the size for HorizontalExtent using the MeasureString method using the last item in the list.
+            // Określ rozmiar dla HorizontalExtent przy użyciu metody MeasureString przy użyciu ostatniego elementu na liście. 
             int hzSize = (int)g.MeasureString(listBox1.Items[listBox1.Items.Count - 1].ToString(), listBox1.Font).Width;
-            // Set the HorizontalExtent property.
+
+            // Ustaw właściwość HorizontalExtent. 
             listBox1.HorizontalExtent = hzSize;
         }
 
 		private void EnableTextBox(bool enable)
 		{
-			// If this returns true, it means it was called from an external thread.
-			if (InvokeRequired)
+            // Jeśli to zwróci true, oznacza to, że zostało wywołane z zewnętrznego wątku. 
+            if (InvokeRequired)
 			{
-				// Create a delegate of this method and let the form run it.
-				this.Invoke(new EnableDelegate(EnableTextBox), new object[] { enable });
-				return; // Important
+                // Utwórz delegata tej metody i pozwól formularzowi go uruchomić. 
+                Invoke(new EnableDelegate(EnableTextBox), new object[] { enable });
+				return;
 			}
 		}
 
@@ -272,7 +258,7 @@ namespace myProactive
             }
         }
 
-		private void textBox1_TextChanged(object sender, EventArgs e)
+		private void TextBox1_TextChanged(object sender, EventArgs e)
 		{
             if (Regex.IsMatch(textBox1.Text, "[^0-9]"))
             {
@@ -280,7 +266,8 @@ namespace myProactive
                 textBox1.Text = textBox1.Text.Remove(textBox1.Text.Length - 1);
             }
         }
-        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+
+        private void BackgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBar1.Value = e.ProgressPercentage;
         }
@@ -294,16 +281,16 @@ namespace myProactive
 
             workerThread = Thread.CurrentThread;
 
-            Excel excel = new Excel(excelPath, 1); //obiek + numer zakladki
-            OutlookInfo info = new OutlookInfo();
+            // Obiek + numer zakladki
+            Excel excel = new Excel(excelPath, 1);
 
-            //wykorzystam to do nazwy kategorii w outlooku
+            // Wykorzystam to do nazwy kategorii w outlooku
             LoginDSV login = new LoginDSV();
 
-            //licznik maili (wszystkie)
+            // Licznik maili (wszystkie)
             int i = 0;
 
-            //licznik maili zapisanych (uwzglednionych)
+            // Licznik maili zapisanych (uwzglednionych)
             int l = 0;
 
             int k1 = 1;
@@ -315,7 +302,6 @@ namespace myProactive
             int k7 = 1;
             int k8 = 1;
             int k9 = 1;
-            //int k10 = 1;
 
             string content = string.Empty;
             string content2 = string.Empty;
@@ -331,7 +317,6 @@ namespace myProactive
             excel.WriteToCell(2, 6, "Error Description");
             excel.WriteToCell(2, 7, "Taken action");
             excel.WriteToCell(2, 8, "INC");
-            //excel.WriteToCell(2, 9, "Create Incident");
 
             excel.ReadCell(0, 0);
 
@@ -342,16 +327,16 @@ namespace myProactive
                 inboxFolder = outlookNamespace.Folders.Session.PickFolder();
                 mailItems = inboxFolder.Items;
 
-                Microsoft.Office.Interop.Outlook.Items restrictedItems = mailItems.Restrict(filter);
+				OutlookApp.Items restrictedItems = mailItems.Restrict(filter);
 
                 for (int j = 0; j <= restrictedItems.Count; j++)
                 {
                     foreach (OutlookApp.MailItem item in mailItems)
                     {
-                        // licznik maili, zwiększam o 1 za każdym razem gdy obliczam kolejną pozycję mailową
+                        // Licznik maili, zwiększam o 1 za każdym razem gdy obliczam kolejną pozycję mailową
                         i += 1;
 
-                        // licznik maili uwzblędnionych, zwiększam o 1 za każdym razem gdy pochodzę do kolejnego rekordu
+                        // Licznik maili uwzblędnionych, zwiększam o 1 za każdym razem gdy pochodzę do kolejnego rekordu
                         l += 1;
 
                         //Start date
@@ -359,31 +344,32 @@ namespace myProactive
 
                         if ((i <= number)) //wczytaj tyle maili, ile zostalo wybranych w klasie Form1.cs
                         {
-                            this.Invoke( //odpowiedź na: Nieprawidłowa operacja między wątkami.
+                            Invoke( //odpowiedź na: Nieprawidłowa operacja między wątkami.
                                new Action(() =>
                                {
+                                   // Wywołanie metody ReportProgress() wywołuje zdarzenie ProgressChanged
+                                   // Do tej metody należy przekazać procent przetwarzania, które zostało zakończone 
+                                   backgroundWorker1.ReportProgress(i);
 
-                               // Calling ReportProgress() method raises ProgressChanged event
-                               // To this method pass the percentage of processing that is complete
-                               backgroundWorker1.ReportProgress(i);
-
-                               //Przypisuje kategorie do obsłużonego maila
-                               string existingCategories = item.Categories;
-
-                                   if (String.IsNullOrEmpty(existingCategories))
+                                   // Przypisuje kategorie do obsłużonego maila
+                                   if (checkBoxTagYes.Checked)
                                    {
-                                       item.Categories = mailCategory;
-                                   }
-                                   else
-                                   {
-                                       if (item.Categories.Contains(mailCategory) == false)
+                                       string existingCategories = item.Categories;
+
+                                       if (string.IsNullOrEmpty(existingCategories))
                                        {
                                            item.Categories = mailCategory;
                                        }
+                                       else
+                                       {
+                                           if (item.Categories.Contains(mailCategory) == false)
+                                           {
+                                               item.Categories = mailCategory;
+                                           }
+                                       }
+                                       // Zapisuje maila po dodaniu kategorii
+                                       item.Save();
                                    }
-                               //Zapisuje maila po dodaniu kategorii
-                                   item.Save();
-
                                    var stringBuilder = new StringBuilder();
 
                                    string CreationTime = item.CreationTime.ToString();
@@ -399,7 +385,7 @@ namespace myProactive
                                    {
                                        listBox1.Items.Add("Item: " + i + " || " + "Skipping, found: Error description 'LOCK: Lock exists'");
 
-                                       //odejmuje z licznika pozycje z LOCK w opisie bledu, w dalszej czesci nie zapisuje i przechodze dalej.
+                                       // Odejmuje z licznika pozycje z LOCK w opisie bledu, w dalszej czesci nie zapisuje i przechodze dalej.
                                        l -= 1;
                                    }
                                    else
@@ -427,8 +413,6 @@ namespace myProactive
                                        }
 
                                        //////////// extract BP
-                                       ///
-
                                        string content_BP = stringBuilder.ToString();
                                        int first_bp = content_BP.IndexOf(" : ") + ": ".Length;
                                        int last_bp = content_BP.LastIndexOf("Body");
@@ -461,7 +445,6 @@ namespace myProactive
                                        }
 
                                        //////////// extract DESTINATION ID
-
                                        string content_destID = stringBuilder.ToString();
 
                                        int first_destID = content_destID.IndexOf("Destination"); //+ " : ".Length;
@@ -483,7 +466,6 @@ namespace myProactive
                                        }
 
                                        //////////// extract ERROR
-
                                        string content_error = stringBuilder.ToString();
                                        int first_error = content_error.IndexOf(" : ") + " : ".Length;
                                        int last_error = content_error.LastIndexOf("Body:");
@@ -505,24 +487,23 @@ namespace myProactive
                                        excel.WriteToCell(k7++, 6, source_error);
                                        excel.WriteToCell(k8++, 7, "no");
                                        excel.WriteToCell(k9++, 8, inc);
-                                       //excel.CopyCell(k10++, 9);
 
-
-                                       listBox1.Items.Add("Item: " + i + " || " + "Date: " + CreationTime + " || " + "WFID: " + wfid + " || " +
+                                       ListBox("Item: " + i + " || " + "Date: " + CreationTime + " || " + "WFID: " + wfid + " || " +
                                        "BP: " + bp + " || " + "SourceID: " + source_id + " || " + "DestinationID: " + source_destID + " || " + source_error);
 
-                                       //AktualizujProgres(i, number);
+                                       // AktualizujProgres(i, number);
                                        CustomizeVerticalScroll();
-                                       listBox1.TopIndex = listBox1.Items.Count - 1; // przewijam wraz z dodana pozycja
 
-                                       // Check if the cancellation is requested
+                                       // Przewijam wraz z dodana pozycja
+                                       listBox1.TopIndex = listBox1.Items.Count - 1;
 
+                                       // Sprawdź, czy zażądano anulowania 
                                        if (backgroundWorker1.CancellationPending)
                                        {
-                                           // Set Cancel property of DoWorkEventArgs object to true
+                                           // Ustaw właściwość Cancel obiektu DoWorkEventArgs na true 
                                            e.Cancel = true;
 
-                                           // Reset progress percentage to ZERO and return
+                                           // Zresetuj procent postępu do ZERA 
                                            backgroundWorker1.ReportProgress(0);
 
                                            return;
@@ -534,10 +515,11 @@ namespace myProactive
                 }
             }
 
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                excel.Close();
+                //excel.Close();
+                label5.Text = "Completed.";
                 //Zapobiega propagacji ThreadAbortException
                 //Thread.ResetAbort();
             }
@@ -560,13 +542,13 @@ namespace myProactive
             return;
         }
 
-        public void btnCancel_Click(object sender, EventArgs e)
+        public void BtnCancel_Click(object sender, EventArgs e)
         {
             try
             {
                 if (backgroundWorker1.IsBusy)
                 {
-                    // Cancel the asynchronous operation if still in progress
+                    // Anuluj operację asynchroniczną jeśli nadal trwa 
                     backgroundWorker1.CancelAsync();
 
                     if (workerThread != null)
@@ -578,11 +560,11 @@ namespace myProactive
                     backgroundWorker1.Dispose();
                     backgroundWorker1.ReportProgress(0);
 
-                    //Czyszcze listbox po anulowaniu procesu
+                    // Czyszcze listbox po anulowaniu procesu
                     listBox1.Items.Clear();
                     label5.Text = "Processing cancelled.";
 
-                    listBox1.Items.Add("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + "Processing cancelled.");
+                    ListBox("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + "Processing cancelled.");
 
                     btnCancel.Enabled = false;
                 }
@@ -596,9 +578,10 @@ namespace myProactive
         public void AktualizujProgres(object sender, ProgressChangedEventArgs e)
         {
             progressBar.Maximum = number;
-            progressBar.Value = e.ProgressPercentage; /// e.ProgressPercentage * 100;
+            progressBar.Value = e.ProgressPercentage;
             label5.Text = "running, please wait";
-            //Uaktywnij przycisk "Anuluj"
+
+            // Uaktywnij przycisk "Anuluj"
             btnCancel.Enabled = true;
         }
         public void RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -609,13 +592,13 @@ namespace myProactive
             }
             else if (e.Error != null)
             {
-                listBox1.Items.Add("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + e.Error.Message);
+                ListBox("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + e.Error.Message);
             }
             else
             {
                 label5.Text = "Completed.";
 
-                //Dezaktywuj przycisk "anuluj" kiedy zakończy sie praca.
+                // Dezaktywuj przycisk "anuluj" kiedy zakończy sie praca.
                 btnCancel.Enabled = false;
 
                 if (MessageBox.Show("Completed successfully. \n Would you like to open it?", "myProactive", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -624,31 +607,31 @@ namespace myProactive
                 }
             }
         }
-
-		private void buttonExtract_Click(object sender, EventArgs e)
+        /*
+		private void ButtonExtract_Click(object sender, EventArgs e)
 		{
             ExtractResource click = new ExtractResource();
             //Wydobywam plik
             click.Extract("myProactive", @"C:\EDI", "Resources", "LW_ErrorAnalyze.xlsx");
         }
-
-		private void ver_Click(object sender, EventArgs e)
+        */
+		private void Ver_Click(object sender, EventArgs e)
 		{
 
 		}
 
-		private void cleanEventViewerToolStripMenuItem_Click(object sender, EventArgs e)
+		private void CleanEventViewerToolStripMenuItem_Click(object sender, EventArgs e)
 		{
             listBox1.Items.Clear();
-            listBox1.Items.Add("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + "App is ready to use.");
+            ListBox("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + "App is ready to use.");
         }
 
-		private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+		private void ComboBox2_SelectedIndexChanged(object sender, EventArgs e)
 		{
 
 		}
 
-		private void checkBoxYes_CheckedChanged(object sender, EventArgs e)
+		private void CheckBoxYes_CheckedChanged(object sender, EventArgs e)
 		{
             if (checkBoxYes.Checked)
             {
@@ -662,7 +645,7 @@ namespace myProactive
             }
         }
 
-		private void checkBoxNo_CheckedChanged(object sender, EventArgs e)
+		private void CheckBoxNo_CheckedChanged(object sender, EventArgs e)
 		{
             if (checkBoxNo.Checked)
             {
@@ -674,6 +657,35 @@ namespace myProactive
                 checkBoxYes.Checked = true;
                 textBox1.Enabled = true;
             }
+        }
+
+		private void CheckBoxTagYes_CheckedChanged(object sender, EventArgs e)
+		{
+            if (checkBoxTagYes.Checked)
+            {
+                checkBoxTagNo.Checked = false;
+            }
+            else
+            {
+                checkBoxTagNo.Checked = true;
+            }
+        }
+
+		private void CheckBoxTagNo_CheckedChanged(object sender, EventArgs e)
+		{
+            if (checkBoxTagNo.Checked)
+            {
+                checkBoxTagYes.Checked = false;
+            }
+            else
+            {
+                checkBoxTagYes.Checked = true;
+            }
+        }
+
+        private void ListBox(string value)
+        {
+			_ = listBox1.Items.Add(value);
         }
 	}
 }

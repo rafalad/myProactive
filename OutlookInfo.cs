@@ -13,7 +13,7 @@ namespace myProactive
 	{
         public string Outlook()
         {
-            myProactive formularz = new myProactive();
+            MyProactive formularz = new MyProactive();
             string info = string.Empty;
             string info2 = string.Empty;
             Outlook.Application Application = new Outlook.Application();
