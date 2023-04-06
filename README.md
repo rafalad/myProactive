@@ -19,10 +19,6 @@ This project is used by the following company and team:
 
 **Server:** Azure Blob Storage
 
-## Installation
-
-The application has been disabled in production use.
-
 ## Author
 
 - [@rafalad](https://www.github.com/rafalad)
